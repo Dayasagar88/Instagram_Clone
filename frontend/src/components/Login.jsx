@@ -3,12 +3,12 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 
 const Signup = () => {
+    const navigate = useNavigate()
   const [input, setInput] = useState({
-    username: "",
     email: "",
     password: "",
   });
@@ -25,7 +25,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:8000/api/v1/user/register", input, {
+      const res = await axios.post("http://localhost:8000/api/v1/user/login", input, {
         headers : {
           'Content-Type' : 'application/json'
         },
@@ -35,10 +35,10 @@ const Signup = () => {
       if(res.data.success){
         toast.success(res.data.message);
         setInput({
-          username: "",
-          email: "",
-          password: "",
+          email: "••••••••••••••••••••••••••••••••••••••••••••",
+          password: "••••••••••••••••••••••••••••••••••••••••••••",
         })
+        navigate("/")
       }
     } catch (error) {
       console.log(error)
@@ -54,20 +54,7 @@ const Signup = () => {
         <form onSubmit={submitHandler} className="shadow-lg flex flex-col gap-5 p-8">
           <div>
             <h1 className="text-center font-bold text-xl">LOGO</h1>
-            <p className="text-sm text-center">Sign up to explore the world</p>
-          </div>
-          <div>
-            <label htmlFor="username" className="font-medium">
-              Username
-            </label>
-            <Input
-              name="username"
-              value={input.username}
-              onChange={inputChangeHandler}
-              id="username"
-              type="text"
-              className="focus-visible:ring-transparent my-2"
-            />
+            <p className="text-sm text-center">Login to your account to explore the world </p>
           </div>
           <div>
             <label htmlFor="email" className="font-medium">
@@ -98,7 +85,7 @@ const Signup = () => {
           {
             isLoading ? (<Button><Loader2 className=" animate-spin h-4 w-4"/></Button>) : (<Button type="submit" >Login</Button>)
           }
-        <p>Already have an account <Link to="/login" className=" hover:underline font-semibold cursor-pointer">Login</Link></p>
+        <p> {"Don't have an account"} <Link to="/signup" className=" hover:underline font-semibold cursor-pointer">Sign up</Link></p>
         </form>
       </div>
     </div>

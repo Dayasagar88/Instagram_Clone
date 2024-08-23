@@ -13,15 +13,13 @@ export const register = async (req, res) => {
       return res.status(401).json({
         message: "Please fill your details",
         success: false,
-      });
+      }); 
     }
-    const user = await User.findOne({ email });
-    if (user) {
-      return res.status(401).json({
-        message: "Email already in use",
-        success: false,
-      });
-    }
+    const userEmail = await User.findOne({email});
+    if (userEmail) return res.status(401).json({message: "Email already in use",success: false});
+    
+    const userUsername = await User.findOne({username})
+    if(userUsername) return res.status(401).json({message : "Try different username", success : false});
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -73,15 +71,15 @@ export const login = async (req, res) => {
     });
 
     //Populate each post in the posts array
-    const populatePost = await Promise.all(async (postId) => {
-      user.posts.map(async (postId) => {
-        const post = await Post.findById(postId);
-        if(post.author.equals(user._id)){
-          return post;
-        }
-        return null;
-      });
-    })
+    const populatedPosts = await Promise.all(
+      user.posts.map( async (postId) => {
+          const post = await Post.findById(postId);
+          if(post.author.equals(user._id)){
+              return post;
+          }
+          return null;
+      })
+  )
 
     user = {
       _id: user._id,
