@@ -118,6 +118,7 @@ export const logout = (_, res) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(400).json({message : "Internal server error", success: false})
   }
 };
 

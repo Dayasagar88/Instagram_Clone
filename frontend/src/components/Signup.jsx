@@ -1,12 +1,15 @@
 import { useState } from "react";
+import Logo from "../Images/Logo-Instagram.png";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { Loader2 } from "lucide-react";
+import { SIGNUP_URL } from "@/api/apis";
 
 const Signup = () => {
+  
   const [input, setInput] = useState({
     username: "",
     email: "",
@@ -21,11 +24,11 @@ const Signup = () => {
     })
   };
 
-  const submitHandler = async (e) => {
+  const signupHandler = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:8000/api/v1/user/register", input, {
+      const res = await axios.post(SIGNUP_URL, input, {
         headers : {
           'Content-Type' : 'application/json'
         },
@@ -51,10 +54,10 @@ const Signup = () => {
   return (
     <div>
       <div className="flex items-center w-screen h-screen justify-center">
-        <form onSubmit={submitHandler} className="shadow-lg flex flex-col gap-5 p-8">
+        <form onSubmit={signupHandler} className="shadow-lg flex flex-col gap-5 p-8">
           <div>
-            <h1 className="text-center font-bold text-xl">LOGO</h1>
-            <p className="text-sm text-center">Sign up to explore the world</p>
+            <img src={Logo} className="max-w-28 mx-auto" alt="logo" />
+            <p className="text-sm text-center">Create your account to explore the world</p>
           </div>
           <div>
             <label htmlFor="username" className="font-medium">
@@ -96,7 +99,7 @@ const Signup = () => {
             />
           </div>
           {
-            isLoading ? (<Button><Loader2 className=" animate-spin h-4 w-4"/></Button>) : (<Button type="submit" >Login</Button>)
+            isLoading ? (<Button><Loader2 className=" animate-spin h-4 w-4"/></Button>) : (<Button type="submit" >Sign up</Button>)
           }
         <p>Already have an account <Link to="/login" className=" hover:underline font-semibold cursor-pointer">Login</Link></p>
         </form>
