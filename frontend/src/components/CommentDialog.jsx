@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { Dialog, DialogContent } from "./ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
 import { Link } from "react-router-dom";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import {
@@ -13,37 +13,39 @@ import {
 import { Button } from "./ui/button";
 import { useState } from "react";
 
-const CommentDialog = ({ open, setOpenComments }) => {
-    const [text , setText] = useState("");
+const CommentDialog = ({ data, open, setOpenComments }) => {
+  const [text, setText] = useState("");
 
-     const inputChangeHandler = (e) => {
-        const inputText = e.target.value;
-        if(inputText.trim()){
-            setText(inputText)
-        }else{
-            setText("");
-        }
-     }   
+  const { username, profilePicture } = data.author;
+  const { image, caption, likes, comments } = data;
 
-     const addCommenthandler = async () => {
-        alert(text)
-     }
+  const inputChangeHandler = (e) => {
+    const inputText = e.target.value;
+    if (inputText.trim()) {
+      setText(inputText);
+    } else {
+      setText("");
+    }
+  };
+
+  const addCommenthandler = async () => {
+    alert(text);
+  };
 
   return (
     <Dialog open={open}>
-
+      <DialogTitle></DialogTitle>
       <DialogContent
+        aria-describedby=""
         onInteractOutside={() => setOpenComments(false)}
-        className="outline-none max-w-5xl p-0 flex flex-col h-[60%]"
+        className="outline-none max-w-5xl p-0 flex flex-col h-[60%] overflow-hidden "
       >
-
-        <div className="flex flex-1">
-
+        <div className="flex flex-1 overflow-hidden">
           {/* Image section */}
-          <div className="w-1/2 my-auto">
+          <div className="w-1/2 my-auto ">
             <img
-              className=" h-ful w-full  object-cover"
-              src="https://images.unsplash.com/photo-1723920515274-ace3503adad6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8"
+              className="w-full"
+              src={image}
               alt="img"
             />
           </div>
@@ -56,12 +58,12 @@ const CommentDialog = ({ open, setOpenComments }) => {
                   <Avatar>
                     <AvatarImage
                       className="w-6 h-6 rounded-full"
-                      src="https://github.com/shadcn.png"
+                      src={profilePicture}
                       alt="img"
                     />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
-                  <p className="font-semibold">Username</p>
+                  <p className="font-semibold">{username}</p>
                 </div>
               </Link>
               <Dialog>
@@ -99,32 +101,33 @@ const CommentDialog = ({ open, setOpenComments }) => {
               <Avatar>
                 <AvatarImage
                   className="w-6 h-6 rounded-full"
-                  src="https://github.com/shadcn.png"
+                  src={profilePicture}
                   alt="post_image"
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <h1 className="ml-1 font-semibold">Username</h1>
-              <p className="ml-1">caption</p>
+              <h1 className="ml-1 font-semibold">{username}</h1>
+              <p className="ml-1">{caption}</p>
             </div>
 
             <div className="mt-5">
-              <div className="flex items-center text-sm">
-                <Avatar>
-                  <AvatarImage
-                    className="w-6 h-6 rounded-full"
-                    src="https://github.com/shadcn.png"
-                    alt="post_image"
-                  />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <h1 className="ml-1 font-semibold">Username</h1>
-                <span className="ml-1">comment.......</span>
-              </div>
+              {comments.map((comment) => (
+                <div className="flex items-center text-sm">
+                  <Avatar>
+                    <AvatarImage
+                      className="w-6 h-6 rounded-full"
+                      src="https://github.com/shadcn.png"
+                      alt="post_image"
+                    />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <h1 className="ml-1 font-semibold">{comment}</h1>
+                  <span className="ml-1"></span>
+                </div>
+              ))}
             </div>
 
             <div className="absolute w-full bottom-1">
-
               <div className="border-t-[1px] py-3 w-[97%] border-gray-300">
                 <div className="flex justify-between mt-2">
                   <div className="flex gap-2 ">
@@ -135,30 +138,33 @@ const CommentDialog = ({ open, setOpenComments }) => {
                   <Bookmark className="cursor-pointer hover:text-gray-600" />
                 </div>
                 <span className="text-md font-semibold block mt-1">
-                  1k likes
+                  {likes.length} Likes
                 </span>
               </div>
 
               <div className="flex py-3 border-t-[1px] w-[97%] border-gray-300">
                 <Smile />
                 <input
-                value={text}
-                onChange={inputChangeHandler}
+                  value={text}
+                  onChange={inputChangeHandler}
                   type="text"
                   placeholder="Add a comment..."
                   className="pl-2 text-sm outline-none w-[85%]"
                 />
-                {<button onClick={addCommenthandler} disabled={!text} className="text-blue-500  font-semibold">Post</button>}
+                {
+                  <button
+                    onClick={addCommenthandler}
+                    disabled={!text}
+                    className="text-blue-500  font-semibold"
+                  >
+                    Post
+                  </button>
+                }
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </DialogContent>
-
     </Dialog>
   );
 };

@@ -1,5 +1,6 @@
 import { LOGOUT_URL } from "@/api/apis";
 import { setAuthUser } from "@/redux/authSlice";
+import { emptyPosts } from "@/redux/postSlice";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ const useLogoutHandler = () => {
       if (res.data.success) {
         navigate("/login");
         dispatch(setAuthUser(null));
+        dispatch(emptyPosts())
         toast.success(res.data.message);
       }
     } catch (error) {
