@@ -1,13 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import {
   Bookmark,
   Heart,
   MessageCircle,
   MoreHorizontal,
-  Scroll,
   Send,
   Smile,
 } from "lucide-react";

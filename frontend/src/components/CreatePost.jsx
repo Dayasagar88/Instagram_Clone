@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Dialog, DialogContent, DialogHeader } from "./ui/dialog";
 import React, { useRef, useState } from "react";
-import CreatePostImg from "../Images/Post.png";
+import CreatePostImg from "..assets/Images/Post.png";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import { readFileAsDataURL } from "@/lib/utils";

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Logo from "../Images/Logo-Instagram.png";
+import Logo from "../assets/Images/Logo-Instagram.png";
 import sideBarItems from "../contants/sideBarItems.jsx";
 import useLogoutHandler from "@/hooks/useLogoutHandler";
 import CreatePost from "./CreatePost";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import instaLogo from "../Images/instaLogo.jpg";
+import instaLogo from "../assets/Images/instalogo.jpg";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";

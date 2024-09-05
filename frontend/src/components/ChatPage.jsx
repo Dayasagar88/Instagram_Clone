@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import messageLogo from "../Images/message_logo.png";
+import messageLogo from "..assets/Images/message_logo.png";
 import { Edit, Info, Phone, Send, Smile, Video } from "lucide-react";
 import Messages from "./Messages";
 import axios from "axios";
