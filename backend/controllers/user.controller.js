@@ -90,6 +90,8 @@ export const login = async (req, res) => {
       followers: user.followers,
       following: user.following,
       posts: user.posts,
+      gender: user.gender,
+      bookmarks : user.bookmarks
     };
 
 
@@ -126,13 +128,13 @@ export const logout = (_, res) => {
 export const getProfile = async (req, res) => {
   try {
     const userId = req.params.id;
-    let user = await User.findById(userId).select("-password");
+    let user = await User.findById(userId).populate({path : "posts" , createdAt : -1}).populate({path : "bookmarks"});
     return res.status(200).json({
       user,
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    console.log(error, "Error");
   }
 };
 

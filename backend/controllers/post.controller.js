@@ -3,6 +3,7 @@ import cloudinary from "cloudinary";
 import { Post } from "../models/post.model.js";
 import { User } from "../models/user.model.js";
 import { Comment } from "../models/comment.model.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 //Create new post
 export const addNewPost = async (req, res) => {
@@ -50,13 +51,13 @@ export const getAllPost = async (req, res) => {
   try {
     const posts = await Post.find()
       .sort({ createdAt: -1 })
-      .populate({ path: "author", select: "username , profilePicture" })
+      .populate({ path: "author", select: "username  profilePicture" })
       .populate({
         path: "comments",
         sort: { createdAt: -1 },
         populate: {
           path: "author",
-          select: "username , profilePicture",
+          select: "username  profilePicture",
         },
       });
     return res.status(200).json({
@@ -76,14 +77,14 @@ export const getUserPosts = async (req, res) => {
       .sort({ createdAt: -1 })
       .populate({
         path: "author",
-        select: "username , profilePicture",
+        select: "username  profilePicture",
       })
       .populate({
         path: "comments",
         sort: { createdAt: -1 },
         populate: {
           path: "author",
-          select: "username , profilePicture",
+          select: "username  profilePicture",
         },
       });
 
@@ -112,6 +113,22 @@ export const likePost = async (req, res) => {
     await post.save();
 
     //Implementing socket io for real time notification
+    const user = await User.findById(likeKrneWaleUserKiId).select(
+      "username profilePicture"
+    );
+    const postOwnerId = post.author.toString();
+    if (postOwnerId !== likeKrneWaleUserKiId) {
+      // emit a notification
+      const notification = {
+        type: "like",
+        userId: likeKrneWaleUserKiId,
+        userDetails: user,
+        postId,
+        message: "Your post was liked",
+      };
+      const postOwnerSocketId = getReceiverSocketId(postOwnerId);
+      io.to(postOwnerSocketId).emit("notification", notification);
+    }
 
     return res.status(200).json({ message: "Post liked", success: true });
   } catch (error) {
@@ -135,6 +152,22 @@ export const dislikePost = async (req, res) => {
     await post.save();
 
     //Implementing socket io for real time notification
+    const user = await User.findById(likeKrneWaleUserKiId).select(
+      "username profilePicture"
+    );
+    const postOwnerId = post.author.toString();
+    if (postOwnerId !== likeKrneWaleUserKiId) {
+      // emit a notification
+      const notification = {
+        type: "dislike",
+        userId: likeKrneWaleUserKiId,
+        userDetails: user,
+        postId,
+        message: "Your post was disliked",
+      };
+      const postOwnerSocketId = getReceiverSocketId(postOwnerId);
+      io.to(postOwnerSocketId).emit("notification", notification);
+    }
 
     return res.status(200).json({ message: "Post disliked", success: true });
   } catch (error) {
@@ -158,10 +191,13 @@ export const addComment = async (req, res) => {
       text,
       author: commentKrneValeKiId,
       post: postId,
-    }).populate({
-      path: "auhtor",
-      select: "username , profilePicture",
     });
+
+    await comment.populate({
+      path: "author",
+      select: "username profilePicture",
+    });
+
     post.comments.push(comment._id);
     await post.save();
 
@@ -182,7 +218,7 @@ export const getCommentOfPost = async (req, res) => {
 
     const comments = await Comment.find({ post: postId }).populate(
       "author",
-      "username, profilePicture"
+      "username profilePicture"
     );
     if (!comments)
       return res
@@ -243,20 +279,18 @@ export const bookmarkPost = async (req, res) => {
       //already bookmarked --> remove from bookmark
       await user.updateOne({ $pull: { bookmarks: post._id } });
       await user.save();
-      return res
-        .status(200)
-        .json({
-          type: "saved",
-          message: "Post removed from bookmarks",
-          success: true,
-        });
+      return res.status(200).json({
+        type: "unsaved",
+        message: "Post removed from bookmarks",
+        success: true,
+      });
     } else {
       //bookmark the post
       await user.updateOne({ $addToSet: { bookmarks: post._id } });
       await user.save();
       return res
         .status(200)
-        .json({ type: "unsaved", message: "Post bookmarked", success: true });
+        .json({ type: "saved", message: "Post bookmarked", success: true, postId });
     }
   } catch (error) {
     console.log(error);

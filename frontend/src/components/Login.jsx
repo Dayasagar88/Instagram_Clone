@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../Images/Logo-Instagram.png";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
@@ -7,11 +7,12 @@ import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { LOGIN_URL } from "@/api/apis";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAuthUser } from "@/redux/authSlice";
 
 const Signup = () => {
   const dispatch = useDispatch()
+  const {user} = useSelector(store => store?.auth);
   const navigate = useNavigate();
   const [input, setInput] = useState({
     email: "",
@@ -57,6 +58,11 @@ const Signup = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    if(user){
+      navigate("/")
+    }
+  },[]);
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import {
   Heart,
   Home,
@@ -16,7 +16,7 @@ const sideBarItems = () => {
   );
 
   const sideBar = [
-    { icon: <Home />, text: " Home" },
+    { icon: <Home />, text: "Home" },
     { icon: <Search />, text: "Search" },
     { icon: <TrendingUp />, text: "Explore" },
     { icon: <MessageCircle />, text: "Messages" },
@@ -24,9 +24,9 @@ const sideBarItems = () => {
     { icon: <PlusSquare />, text: "Create" },
     {
       icon: (
-        <Avatar>
-          <AvatarImage className="rounded-full w-6 h-6" src={profilePicture} />
-          <AvatarFallback>CN</AvatarFallback>
+        <Avatar className="w-6 h-6">
+          <AvatarImage className="rounded-full" src={profilePicture} />
+          <AvatarFallback><i className="fa-solid text-sm fa-user"></i></AvatarFallback>
         </Avatar>
       ),
       text: "Profile",

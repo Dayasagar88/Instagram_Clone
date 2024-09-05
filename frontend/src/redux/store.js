@@ -12,6 +12,10 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import postSlice from "./postSlice.js";
+import suggestedUserSlice from "./suggestedUserSlice.js";
+import socketSlice from "./socketSlice.js";
+import chatSlice from "./chatSlice.js";
+import rtnSlice from "./rtnSlice.js";
 
 
 const persistConfig = {
@@ -22,7 +26,11 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     auth: authSlice,
-    post: postSlice
+    post: postSlice,
+    suggestedUsers : suggestedUserSlice,
+    socketio: socketSlice,
+    chat : chatSlice,
+    rtn : rtnSlice
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

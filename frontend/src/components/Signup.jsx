@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../Images/Logo-Instagram.png";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { SIGNUP_URL } from "@/api/apis";
+import { useSelector } from "react-redux";
 
 const Signup = () => {
   
+  const {user} = useSelector(store => store?.auth);
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     username: "",
     email: "",
@@ -50,6 +53,11 @@ const Signup = () => {
       setLoading(false);
     }
   }
+  useEffect(() => {
+    if(user){
+      navigate("/")
+    }
+  },[]);
 
   return (
     <div>

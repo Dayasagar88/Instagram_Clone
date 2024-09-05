@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className="">
       <Sidebar/>
       <div>
         <Outlet />
