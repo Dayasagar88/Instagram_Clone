@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Logo from "../Images/Logo-Instagram.png";
+import Logo from "..assets/Images/Logo-Instagram.png";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import axios from "axios";
