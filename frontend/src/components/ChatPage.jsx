@@ -72,7 +72,7 @@ const ChatPage = () => {
               <div
 
               onClick={() => {
-                if (window.innerWidth <= 400) {
+                if (window.innerWidth <= 600) {
                   // Mobile screen size
                   handleChatPageForMobile(user._id);
                 } else {
