@@ -42,11 +42,11 @@ const Profile = () => {
   const bookmarkedPosts = posts.filter(post => bookmarks?.some((p) => post?._id === p?._id))
 
    return (
-    <div className="bg-gray-20 lg:w-[83%] max-w-[91.5%] mr-0 lg:ml-72 mx-auto">
+    <div className="bg-gray-20 lg:w-[83%] sm:max-w-[91.5%] sm:mr-0 lg:ml-72 sm:mx-auto ">
       {/* Profile */}
-      <div className="flex  items-center ml-20 gap-2">
-        <div className="flex justify-center py-10 gap-20">
-          <Avatar className="w-40 h-40">
+      <div className="flex  items-center justify-center sm:justify-start  sm:ml-20 sm:gap-2 mt-6">
+        <div className="flex  justify-center sm:py-10 py-5 sm:gap-20 gap-10">
+          <Avatar className="sm:w-40 sm:h-40 w-16 h-16">
             <AvatarImage src={profilePicture} />
             <AvatarFallback>
               <i className="fa-solid text-5xl fa-user"></i>
@@ -101,28 +101,28 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <Settings className="-mt-32" />
+        <Settings className="-mt-32 lg:block hidden" />
       </div>
 
       {/* Stories */}
-      <div className="flex items-center gap-2 px-8 py-8 border-b border-gray-400 ">
+      <div className="flex w-full items-center gap-2 sm:px-8 px-1 sm:py-8 py-5 border-b border-gray-400 ">
         <div className="bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 p-[4px] rounded-full">
-          <div className="bg-gray-200 w-20 h-20 rounded-full p-[3px]"></div>
+          <div className="bg-gray-200 min-w-14 min-h-14 rounded-full p-[3px]"></div>
         </div>
         <div className="bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 p-[4px] rounded-full">
-          <div className="bg-gray-200 w-20 h-20 rounded-full p-[3px]"></div>
+          <div className="bg-gray-200 min-w-14 min-h-14 rounded-full p-[3px]"></div>
         </div>
         <div className="bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 p-[4px] rounded-full">
-          <div className="bg-gray-200 w-20 h-20 rounded-full p-[3px]"></div>
+          <div className="bg-gray-200 min-w-14 min-h-14 rounded-full p-[3px]"></div>
         </div>
         <div className=" bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 p-[4px] rounded-full">
-          <div className="bg-gray-200 items-center justify-center flex w-20 h-20 rounded-full p-[3px]">
+          <div className="bg-gray-200 items-center justify-center flex min-w-14 min-h-14 rounded-full p-[3px]">
             <i className="fa-solid text-3xl text-gray-600 fa-plus"></i>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-center text-gray-800 gap-24 font-semibold ">
+      <div className="flex justify-center text-gray-800 gap-8 sm:gap-24 font-semibold sm:text-normal text-sm">
         <p
           onClick={() => {
             handleTabs("posts");

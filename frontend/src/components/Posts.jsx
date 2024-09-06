@@ -7,7 +7,7 @@ const Posts = () => {
   const posts = useSelector((store) => store?.post?.posts);
 
   return (
-    <div className="w-[30rem]">
+    <div className="sm:w-[30rem] w-screen sm:px-0 px-1">
       {/* Stories */}
       <Stories/>
 

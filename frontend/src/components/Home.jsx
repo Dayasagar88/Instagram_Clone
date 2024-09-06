@@ -9,7 +9,7 @@ const Home = () => {
   useSuggestedUser();
   return (
     <div className='flex'>
-      <div className='flex mx-auto '>
+      <div className='flex mx-auto'>
         <Feed/>
         <Outlet/>
       </div>

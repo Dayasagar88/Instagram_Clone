@@ -23,8 +23,8 @@ const Stories = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="hidden" />
+        <CarouselNext className="hidden" />
       </Carousel>
   )
 }

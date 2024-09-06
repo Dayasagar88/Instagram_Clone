@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 const MainLayout = () => {
   return (
-    <div className="">
+    <div className="w-screen">
       <Sidebar/>
       <div>
         <Outlet />
